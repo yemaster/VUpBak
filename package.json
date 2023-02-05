@@ -1,0 +1,62 @@
+{
+    "name": "vupbak",
+    "version": "2.0.1",
+    "description": "USB Copyer",
+    "main": "main.js",
+    "build": {
+        "appId": "vupbak",
+        "productName": "VUpBak",
+        "directories": {
+            "output": "build"
+        },
+        "asar": true,
+        "win": {
+            "icon": "./logo.ico",
+            "target": [
+                {
+                    "target": "nsis"
+                }
+            ]
+        },
+        "extraFiles": {
+            "from": "./logo.ico",
+            "to": "logo.ico"
+        },
+        "nsis": {
+            "oneClick": false,
+            "allowElevation": true,
+            "allowToChangeInstallationDirectory": true,
+            "installerIcon": "./logo.ico",
+            "installerHeaderIcon": "./logo.ico",
+            "createDesktopShortcut": true,
+            "createStartMenuShortcut": true,
+            "shortcutName": "VUpBak"
+        }
+    },
+    "scripts": {
+        "start": "electron .",
+        "postinstall": "electron-builder install-app-deps",
+        "package": "electron-packager . --overwrite --platform=win32 --arch=ia32 --out=out --asar --icon=logo.ico",
+        "build": "electron-builder --win --ia32"
+    },
+    "keywords": [
+        "Electron",
+        "quick",
+        "start",
+        "tutorial",
+        "demo"
+    ],
+    "author": "yemaster",
+    "license": "GPL-3.0-or-later",
+    "devDependencies": {
+        "electron": "^16.0.6",
+        "electron-builder": "^23.6.0",
+        "electron-rebuild": "^3.2.5"
+    },
+    "dependencies": {
+        "electron-log": "^5.0.0-beta.16",
+        "electron-store": "^8.1.0",
+        "iconv-lite": "^0.6.3",
+        "usb-detection": "^4.14.1"
+    }
+}

@@ -1,0 +1,107 @@
+{
+  "id": "3846126",
+  "name": "vety",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "18991636",
+      "name": "hardware",
+      "font_class": "hardware",
+      "unicode": "e856",
+      "unicode_decimal": 59478
+    },
+    {
+      "icon_id": "7239938",
+      "name": "usb",
+      "font_class": "usb",
+      "unicode": "e75f",
+      "unicode_decimal": 59231
+    },
+    {
+      "icon_id": "7594037",
+      "name": "24gl-minimize",
+      "font_class": "24gl-minimize",
+      "unicode": "ea6b",
+      "unicode_decimal": 60011
+    },
+    {
+      "icon_id": "7594407",
+      "name": "24gl-square",
+      "font_class": "24gl-square",
+      "unicode": "ea98",
+      "unicode_decimal": 60056
+    },
+    {
+      "icon_id": "7594048",
+      "name": "24gl-play",
+      "font_class": "24gl-play",
+      "unicode": "ea6e",
+      "unicode_decimal": 60014
+    },
+    {
+      "icon_id": "7541966",
+      "name": "24gl-home5",
+      "font_class": "24gl-home5",
+      "unicode": "e834",
+      "unicode_decimal": 59444
+    },
+    {
+      "icon_id": "7569989",
+      "name": "24gl-cross",
+      "font_class": "24gl-cross",
+      "unicode": "e97d",
+      "unicode_decimal": 59773
+    },
+    {
+      "icon_id": "7569991",
+      "name": "24gl-infoCircle",
+      "font_class": "24gl-infoCircle",
+      "unicode": "e97e",
+      "unicode_decimal": 59774
+    },
+    {
+      "icon_id": "7577297",
+      "name": "24gl-gear2",
+      "font_class": "24gl-gear2",
+      "unicode": "e9bb",
+      "unicode_decimal": 59835
+    },
+    {
+      "icon_id": "7592562",
+      "name": "24gl-musicAlbum",
+      "font_class": "24gl-musicAlbum",
+      "unicode": "ea0b",
+      "unicode_decimal": 59915
+    },
+    {
+      "icon_id": "7594007",
+      "name": "24gl-backward",
+      "font_class": "24gl-backward",
+      "unicode": "ea65",
+      "unicode_decimal": 60005
+    },
+    {
+      "icon_id": "7594022",
+      "name": "24gl-forward",
+      "font_class": "24gl-forward",
+      "unicode": "ea68",
+      "unicode_decimal": 60008
+    },
+    {
+      "icon_id": "7594034",
+      "name": "24gl-minimization",
+      "font_class": "24gl-minimization",
+      "unicode": "ea6a",
+      "unicode_decimal": 60010
+    },
+    {
+      "icon_id": "7594045",
+      "name": "24gl-pause",
+      "font_class": "24gl-pause",
+      "unicode": "ea6d",
+      "unicode_decimal": 60013
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.2, minimum-scale=1, maximum-scale=1">
+    <title>Vety</title>
+    <link rel="stylesheet" type="text/css" href="./statics/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="./statics/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="./vety.css">
+    <script src="./statics/jquery.min.js"></script>
+    <script src="./statics/semantic.min.js"></script>
+    <script src="./statics/vue.min.js"></script>
+    <script src="./statics/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="./statics/sweetalert2.min.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="ui active inverted dimmer fadeIn" v-show="isLoadingFile" style="backdrop-filter: blur(3px)">
+            <div class="ui text elastic inline blue loader" style="max-width: 300px;">{{
+                loadText }}</div>
+        </div>
+        <div class="vRightMenu" id="rightMenu">
+            <ul>
+                <li><a href="javascript:;" @click="playFrom(cutResult.materials[chooseEle][0] / 1000)">播放</a></li>
+                <!--li><a href="javascript:;" @click="exportMp3(chooseEle)">导出为mp3</a></li-->
+            </ul>
+        </div>
+        <div class="ui left fixed vertical icon borderless menu vmenu primary">
+            <div class="menuScroller"></div>
+            <a class="item" v-for="(tabMenuItem,k) in menu.tabMenuItems" v-bind:key="k" @click="changeTab(k)"
+                :class="{ active: menu.chosenTab == tabMenuItem.page}">
+                <!--i :class="tabMenuItem.icon+' icon'"></i-->
+                <i :class="'icon iconfont icon-'+tabMenuItem.icon"></i>
+                <span class="text">{{ tabMenuItem.name }}</span>
+            </a>
+        </div>
+        <div class="ui app" id="VetyContainer" style="height: 100%;">
+            <div class="topButtons">
+                <a class="topButton red" id="closebtn"><i class="icon iconfont icon-24gl-cross"></i></a>
+                <a class="topButton" id="maxbtn">
+                    <i class="icon iconfont icon-24gl-square" v-if="!isMax"></i>
+                    <i class="icon iconfont icon-24gl-minimize" v-else></i>
+                </a>
+                <a class="topButton" id="minbtn"><i class="icon iconfont icon-24gl-minimization"></i></a>
+            </div>
+            <div class="topBar">
+                <span>
+                    <img src="./imgs/logo.ico" class="icon">{{ app.name }}
+                </span>
+            </div>
+            <div class='ui tab' ref="UsbList">
+                <h1 class="page-title">USB List</h1>
+                <div class="vetyCard">
+                    <div class="ui relaxed divided list">
+                        <div class="item" v-for="(d, i) in driverList" v-bind:key="i">
+                            <i class="icon iconfont large icon-usb middle aligned icon" v-if="d.isRemovable !== -1"></i>
+                            <i class="icon-hardware large icon iconfont middle aligned icon" v-else></i>
+                            <div class="content">
+                                <div class="header">{{ d.VolumeName }}({{ d.DeviceID }})</div>
+                                <div class="description">Free: {{formatSize(d.FreeSpace) }}, All: {{ formatSize(d.Size) }}
+                                    <template v-if="d.DeviceID == nowCopying">
+                                        <br><div class="ui red horizontal label">Copying</div> {{ formatSize(copyedSize) }} / {{ formatSize(d.used) }}
+                                    </template>
+                                    <template v-else-if="finished.indexOf(d.DeviceID) > -1">
+                                        <br><div class="ui green horizontal label">Copied</div> {{ formatSize(d.used) }} / {{ formatSize(d.used) }}
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='ui tab' ref="Settings">
+                <h1 class="page-title">设置</h1>
+                <div class="vetyCard">
+                    <div class="ui fluid form">
+                        <div class="field">
+                            <label>保存路径</label>
+                            <input type="text" :value="config.saveFileAddr" disabled>
+                        </div>
+                        <div class="field">
+                            <label>白名单</label>
+                            <input type="text" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='ui tab' ref="About">
+                <h1 class="page-title">关于</h1>
+                <div class="vetyCard">VUpBak by yemaster</div>
+            </div>
+        </div>
+    </div>
+    <script src="./vety.js"></script>
+    <script src="../renderer.js"></script>
+</body>
+
+</html>
