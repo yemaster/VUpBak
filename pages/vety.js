@@ -20,6 +20,10 @@ let Vety = new Vue({
                 page: "UsbList",
                 name: "主页"
             }, {
+                icon: "24gl-folder",
+                page: "FileList",
+                name: "文件",
+            }, {
                 icon: "24gl-gear2",
                 page: "Settings",
                 name: "设置",
@@ -35,11 +39,10 @@ let Vety = new Vue({
             saveFileAddr: "",
             whiteList: "",
         },
+        copiedUSBs: [],
         loadText: "加载中",
         isloading: true,
-        isLoadingFile: false,
         copyedSize: 0,
-        isOpenContext: false,
         customPage: "",
     },
     mounted: function () {
@@ -49,35 +52,11 @@ let Vety = new Vue({
         // Send Prepare Signal
         ipc.send('getConfig')
 
-        // Right Menu
-        document.addEventListener("click", _t.closeContextMenu)
-
-        $('.checkbox').checkbox()
         $('.vmenu .menuScroller').css({
             top: `${$(".vmenu a.active.item")[0].offsetTop + 22.5}px`,
             height: "15px"
         })
-        $(".ui.dropdown.button").dropdown()
         $(_t.$refs[this.menu.chosenTab]).transition('fade up', '100ms')
-        // Key Listener
-        document.addEventListener("keydown", (e) => {
-            //console.log(e)
-            e.preventDefault()
-            let pressedKey = e.key.toUpperCase()
-            switch (pressedKey) {
-                case "R":
-                    if (e.ctrlKey)
-                        ipc.send("window-reload")
-                    break
-                case "F4":
-                    if (e.altKey)
-                        ipc.send("window-close")
-                    break
-                case "F12":
-                    ipc.send("window-debug")
-                    break
-            }
-        })
     },
     methods: {
         parseLink(url) {
@@ -129,39 +108,15 @@ let Vety = new Vue({
             for (let i in this.config)
                 this.config[i] = this.config[i]
         },
-        // Context Menu
-        closeContextMenu() {
-            let _t = this
-            if (_t.isOpenContext) {
-                $("#rightMenu").transition(`slide ${_t.isOpenContext} out`)
-                _t.isOpenContext = false
-            }
+        askFolder: function () {
+            ipc.send("ask-save-folder")
         },
-        showContextMenu(q, e) {
-            let _t = this
-            _t.chooseEle = q
-            let rm = document.getElementById("rightMenu")
-            let mx = e.clientX;
-            let my = e.clientY;
-            let rmWidth = rm.offsetWidth;
-            let rmHeight = rm.offsetHeight;
-            let pageWidth = document.documentElement.clientWidth;
-            let pageHeight = document.documentElement.clientHeight - 120;
-            if ((mx + rmWidth) < pageWidth)
-                rm.style.left = mx + "px";
-            else
-                rm.style.left = mx - rmWidth + "px";
-            if ((my + rmHeight) < pageHeight) {
-                rm.style.top = my + "px"
-                _t.isOpenContext = "down"
-                $("#rightMenu").transition("slide down in", "200ms")
-            } else {
-                rm.style.top = my - rmHeight + "px"
-                _t.isOpenContext = "up"
-                $("#rightMenu").transition("slide up in", "200ms")
-            }
-            return false;
+        openSaveFolder: function (e) {
+            shell.openPath(e)
         },
+        updateWhiteList: function() {
+            ipc.send("update-white-list", this.config.whiteList)
+        }
     }
 })
 document.getElementById('maxbtn').addEventListener('click', () => {
@@ -176,15 +131,15 @@ document.getElementById('closebtn').addEventListener('click', () => {
 ipc.on('mainWin-max', (_, status) => {
     Vety.isMax = status
 })
-ipc.on('updateDriverList', (_, ps) => {
-    Vety.driverList = ps
-})
 ipc.on('mes', (_, ic, ti, ms) => {
     Toast.fire({
         icon: ic,
         title: ti,
         text: ms
     })
+})
+ipc.on('updateDriverList', (_, ps) => {
+    Vety.driverList = ps
 })
 ipc.on('startCopy', (_, t) => {
     Vety.copyedSize = 0
@@ -200,5 +155,9 @@ ipc.on('finishCopy', (_, t) => {
     }
 })
 ipc.on('updateConfig', (_, t) => {
+    t.whiteList = t.whiteList.join(",")
     Vety.config = t
+})
+ipc.on('updateCopieds', (_, t) => {
+    Vety.copiedUSBs = t
 })
